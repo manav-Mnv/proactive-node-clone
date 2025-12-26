@@ -19,7 +19,7 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
       <Container>
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
@@ -28,15 +28,15 @@ export function Navbar() {
             <span className="text-foreground font-semibold text-lg">Proactiv</span>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Nav - Centered */}
+          <div className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
-                className={`text-sm transition-colors ${
+                className={`text-sm px-4 py-2 rounded-full transition-colors ${
                   location.pathname === link.href
-                    ? "text-foreground bg-secondary px-3 py-1.5 rounded-full"
+                    ? "text-foreground bg-secondary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -46,7 +46,7 @@ export function Navbar() {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4 ml-auto">
             <Link to="/register">
               <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
                 Register
@@ -59,7 +59,7 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-foreground"
+            className="md:hidden text-foreground ml-auto"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
