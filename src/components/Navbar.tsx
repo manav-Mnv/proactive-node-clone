@@ -1,49 +1,57 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Container } from "./ui/container";
 import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { name: "Features", href: "#features" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "Blog", href: "#" },
-  { name: "Contact", href: "#" },
+  { name: "Features", href: "/features" },
+  { name: "Pricing", href: "/pricing" },
+  { name: "Blog", href: "/blog" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
       <Container>
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-lg">P</span>
             </div>
             <span className="text-foreground font-semibold text-lg">Proactiv</span>
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
-                className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                to={link.href}
+                className={`text-sm transition-colors ${
+                  location.pathname === link.href
+                    ? "text-foreground bg-secondary px-3 py-1.5 rounded-full"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-              Register
-            </Button>
+            <Link to="/register">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                Register
+              </Button>
+            </Link>
             <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
               Book a demo
             </Button>
@@ -69,19 +77,25 @@ export function Navbar() {
             >
               <div className="flex flex-col gap-4">
                 {navLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.name}
-                    href={link.href}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    to={link.href}
+                    className={`transition-colors ${
+                      location.pathname === link.href
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                     onClick={() => setIsOpen(false)}
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 ))}
                 <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                  <Button variant="ghost" className="justify-start">
-                    Register
-                  </Button>
+                  <Link to="/register" onClick={() => setIsOpen(false)}>
+                    <Button variant="ghost" className="justify-start w-full">
+                      Register
+                    </Button>
+                  </Link>
                   <Button className="bg-primary text-primary-foreground">
                     Book a demo
                   </Button>

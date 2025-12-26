@@ -151,11 +151,11 @@ export function FeaturesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`${feature.span} bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-colors`}
+              className={`${feature.span} bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 group cursor-pointer`}
             >
               <div className="flex items-center gap-3 mb-2">
-                <div className="text-primary">{feature.icon}</div>
-                <h3 className="font-semibold text-foreground">{feature.title}</h3>
+                <div className="text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">{feature.icon}</div>
+                <h3 className="font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">{feature.title}</h3>
               </div>
               <p className="text-muted-foreground text-sm">{feature.description}</p>
               {feature.visual}
