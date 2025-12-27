@@ -28,7 +28,7 @@ export function Footer() {
 
           {/* Copyright */}
           <div className="text-center md:text-right">
-            <p className="text-muted-foreground text-sm">Copyright © 2024 Proactiv INC</p>
+            <p className="text-muted-foreground text-sm">Copyright © 2025 Proactiv Mnv</p>
             <p className="text-muted-foreground text-xs">All rights reserved</p>
           </div>
         </div>

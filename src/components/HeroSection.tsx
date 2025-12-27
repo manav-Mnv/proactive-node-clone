@@ -64,7 +64,7 @@ export function HeroSection() {
               </div>
             </div>
             <p className="text-muted-foreground text-sm">
-              Trusted by <span className="text-foreground font-medium">27,000+</span> creators
+              Trusted by <span className="text-foreground font-medium">0+</span> creators
             </p>
           </motion.div>
 
