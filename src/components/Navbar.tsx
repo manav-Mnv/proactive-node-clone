@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { name: "Features", href: "/features" },
-  { name: "Pricing", href: "/pricing" },
+
   { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
@@ -34,11 +34,10 @@ export function Navbar() {
               <Link
                 key={link.name}
                 to={link.href}
-                className={`text-sm px-4 py-2 rounded-full transition-colors ${
-                  location.pathname === link.href
+                className={`text-sm px-4 py-2 rounded-full transition-colors ${location.pathname === link.href
                     ? "text-foreground bg-secondary"
                     : "text-muted-foreground hover:text-foreground"
-                }`}
+                  }`}
               >
                 {link.name}
               </Link>
@@ -80,11 +79,10 @@ export function Navbar() {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`transition-colors ${
-                      location.pathname === link.href
+                    className={`transition-colors ${location.pathname === link.href
                         ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground"
-                    }`}
+                      }`}
                     onClick={() => setIsOpen(false)}
                   >
                     {link.name}
