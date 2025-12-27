@@ -3,13 +3,51 @@ import { Container } from "./ui/container";
 import { Button } from "./ui/button";
 import { ArrowRight, Star } from "lucide-react";
 
-const avatars = [
-  "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop",
-  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop",
-  "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop",
-  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
-  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
-  "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=100&h=100&fit=crop",
+import { AnimatedTooltip } from "./ui/animated-tooltip";
+
+const people = [
+  {
+    id: 1,
+    name: "John Doe",
+    designation: "Software Engineer",
+    image:
+      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop",
+  },
+  {
+    id: 2,
+    name: "Robert Johnson",
+    designation: "Product Manager",
+    image:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop",
+  },
+  {
+    id: 3,
+    name: "Jane Smith",
+    designation: "Data Scientist",
+    image:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop",
+  },
+  {
+    id: 4,
+    name: "Emily Davis",
+    designation: "UX Designer",
+    image:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
+  },
+  {
+    id: 5,
+    name: "Tyler Durden",
+    designation: "Soap Maker",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
+  },
+  {
+    id: 6,
+    name: "Dora",
+    designation: "The Explorer",
+    image:
+      "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=100&h=100&fit=crop",
+  },
 ];
 
 export function HeroSection() {
@@ -17,7 +55,7 @@ export function HeroSection() {
     <section className="relative pt-32 pb-20 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background pointer-events-none" />
-      
+
       <Container className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -46,15 +84,8 @@ export function HeroSection() {
           >
             <div className="flex items-center gap-2">
               {/* Avatar stack */}
-              <div className="flex -space-x-3">
-                {avatars.map((avatar, i) => (
-                  <img
-                    key={i}
-                    src={avatar}
-                    alt="User avatar"
-                    className="w-10 h-10 rounded-full border-2 border-background object-cover"
-                  />
-                ))}
+              <div className="flex flex-row items-center justify-center w-full">
+                <AnimatedTooltip items={people} />
               </div>
               {/* Stars */}
               <div className="flex gap-0.5 ml-2">
@@ -94,7 +125,7 @@ export function HeroSection() {
           <div className="relative mx-auto max-w-5xl">
             {/* Glow effect */}
             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10 pointer-events-none" />
-            
+
             {/* Dashboard image container */}
             <div className="rounded-xl overflow-hidden border border-border bg-card shadow-2xl">
               <img
