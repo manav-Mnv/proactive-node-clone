@@ -116,6 +116,7 @@ export function HeroSection() {
         </motion.div>
 
         {/* Dashboard Preview */}
+        {/* Dashboard Preview */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
