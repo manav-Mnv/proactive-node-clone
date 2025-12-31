@@ -128,12 +128,16 @@ export function HeroSection() {
             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10 pointer-events-none" />
 
             {/* Dashboard image container */}
-            <div className="rounded-xl overflow-hidden border border-border bg-card shadow-2xl">
-              <img
-                src="https://proactiv-aceternity.vercel.app/_next/image?url=%2Fdashboard.png&w=3840&q=75"
-                alt="Proactiv Dashboard"
-                className="w-full h-auto"
-              />
+            <div className="rounded-xl overflow-hidden border border-border bg-card shadow-2xl relative aspect-video">
+              <iframe
+                className="w-full h-full absolute inset-0"
+                src="https://www.youtube.com/embed/tV2qoDVnfxs?si=2sqjUmuewzjGQgdL"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
             </div>
           </div>
         </motion.div>
