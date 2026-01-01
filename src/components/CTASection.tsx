@@ -5,6 +5,8 @@ import { ArrowRight, Star } from "lucide-react";
 
 import { AnimatedTooltip } from "./ui/animated-tooltip";
 
+import { MacbookScroll } from "./ui/macbook-scroll";
+
 const people = [
   {
     id: 1,
@@ -97,30 +99,20 @@ export function CTASection() {
           </Button>
         </motion.div>
 
-        {/* Dashboard preview with perspective */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-16 relative"
-        >
-          <div className="relative mx-auto max-w-4xl" style={{ perspective: "1000px" }}>
-            <div
-              className="rounded-xl overflow-hidden border border-border bg-card shadow-2xl"
-              style={{ transform: "rotateX(10deg)" }}
-            >
-              <img
-                src="https://proactiv-aceternity.vercel.app/_next/image?url=%2Fdashboard.png&w=3840&q=75"
-                alt="Proactiv Dashboard"
-                className="w-full h-auto"
-              />
-            </div>
-            {/* Fade overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent pointer-events-none" />
-          </div>
-        </motion.div>
+
       </Container>
+
+      <div className="overflow-hidden bg-[#0B0B0F] dark:bg-[#0B0B0F] w-full">
+        <MacbookScroll
+          src="https://proactiv-aceternity.vercel.app/_next/image?url=%2Fdashboard.png&w=3840&q=75"
+          showGradient={false}
+          title={
+            <span className="text-3xl md:text-4xl font-bold text-neutral-800 dark:text-neutral-200">
+              Communicate effectively <br /> with your audience.
+            </span>
+          }
+        />
+      </div>
     </section>
   );
 }
