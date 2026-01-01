@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Container } from "./ui/container";
 import { Button } from "./ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 
@@ -15,7 +15,8 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { isAuthenticated, logout } = useAuth(); // Use auth context
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
@@ -47,30 +48,20 @@ export function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4 ml-auto">
-            {isAuthenticated ? (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-muted-foreground hover:text-foreground"
-                onClick={logout}
-              >
+            {user ? (
+              <Button size="sm" variant="ghost" onClick={logout}>
+                <LogOut className="w-4 h-4 mr-2" />
                 Logout
               </Button>
             ) : (
-              <>
-                <Link to="/login">
-                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                    Login
-                  </Button>
-                </Link>
-              </>
-            )}
-
-            {!isAuthenticated && (
-              <Button size="sm" variant="outline" className="hidden lg:inline-flex">
-                Book a demo
+              <Button size="sm" variant="ghost" onClick={() => navigate("/login")}>
+                <LogIn className="w-4 h-4 mr-2" />
+                Login
               </Button>
             )}
+            <Button size="sm" variant="outline" className="hidden lg:inline-flex" onClick={() => navigate("/contact")}>
+              Book a demo
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -106,29 +97,20 @@ export function Navbar() {
                   </Link>
                 ))}
                 <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                  {isAuthenticated ? (
-                    <Button
-                      variant="ghost"
-                      className="justify-start w-full"
-                      onClick={() => {
-                        logout();
-                        setIsOpen(false);
-                      }}
-                    >
+                  {user ? (
+                    <Button variant="ghost" className="w-full justify-start" onClick={() => { logout(); setIsOpen(false); }}>
+                      <LogOut className="w-4 h-4 mr-2" />
                       Logout
                     </Button>
                   ) : (
-                    <Link to="/login" onClick={() => setIsOpen(false)}>
-                      <Button variant="ghost" className="justify-start w-full">
-                        Login
-                      </Button>
-                    </Link>
-                  )}
-                  {!isAuthenticated && (
-                    <Button variant="outline" className="w-full">
-                      Book a demo
+                    <Button variant="ghost" className="w-full justify-start" onClick={() => { navigate("/login"); setIsOpen(false); }}>
+                      <LogIn className="w-4 h-4 mr-2" />
+                      Login
                     </Button>
                   )}
+                  <Button variant="outline" className="w-full" onClick={() => { navigate("/contact"); setIsOpen(false); }}>
+                    Book a demo
+                  </Button>
                 </div>
               </div>
             </motion.div>

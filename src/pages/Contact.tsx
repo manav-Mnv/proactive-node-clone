@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -9,6 +9,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, Headphones } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+import { db } from "@/lib/firebase";
+import { collection, addDoc } from "firebase/firestore";
+import { useAuth } from "@/context/AuthContext";
 
 const contactInfo = [
   {
@@ -30,6 +34,7 @@ const contactInfo = [
 
 export default function Contact() {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,13 +42,36 @@ export default function Contact() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        name: user.displayName || "",
+        email: user.email || ""
+      }));
+    }
+  }, [user]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
-    setFormData({ name: "", email: "", company: "", message: "" });
+    try {
+      await addDoc(collection(db, "demos"), {
+        ...formData,
+        timestamp: new Date(),
+      });
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      setFormData({ name: "", email: "", company: "", message: "" });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -65,7 +93,7 @@ export default function Contact() {
                 Contact us
               </h1>
               <p className="text-muted-foreground text-lg mb-12">
-                We are always looking for ways to improve our products and services. 
+                We are always looking for ways to improve our products and services.
                 Contact us and let us know how we can help you.
               </p>
 
@@ -91,8 +119,8 @@ export default function Contact() {
             >
               {/* Grid Pattern Background */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:40px_40px] rounded-2xl opacity-50" />
-              
-              <form 
+
+              <form
                 onSubmit={handleSubmit}
                 className="relative bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-8 space-y-6"
               >
@@ -144,7 +172,7 @@ export default function Contact() {
                   />
                 </div>
 
-                <Button 
+                <Button
                   type="submit"
                   className="bg-secondary text-foreground hover:bg-secondary/80"
                 >
