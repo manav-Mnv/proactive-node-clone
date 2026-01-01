@@ -4,10 +4,10 @@ import { Container } from "./ui/container";
 import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
 
 const navLinks = [
   { name: "Features", href: "/features" },
-
   { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
@@ -15,6 +15,7 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, logout } = useAuth(); // Use auth context
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
@@ -35,8 +36,8 @@ export function Navbar() {
                 key={link.name}
                 to={link.href}
                 className={`text-sm px-4 py-2 rounded-full transition-colors ${location.pathname === link.href
-                    ? "text-foreground bg-secondary"
-                    : "text-muted-foreground hover:text-foreground"
+                  ? "text-foreground bg-secondary"
+                  : "text-muted-foreground hover:text-foreground"
                   }`}
               >
                 {link.name}
@@ -46,14 +47,30 @@ export function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4 ml-auto">
-            <Link to="/register">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                Register
+            {isAuthenticated ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground hover:text-foreground"
+                onClick={logout}
+              >
+                Logout
               </Button>
-            </Link>
-            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              Book a demo
-            </Button>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                    Login
+                  </Button>
+                </Link>
+              </>
+            )}
+
+            {!isAuthenticated && (
+              <Button size="sm" variant="outline" className="hidden lg:inline-flex">
+                Book a demo
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -80,8 +97,8 @@ export function Navbar() {
                     key={link.name}
                     to={link.href}
                     className={`transition-colors ${location.pathname === link.href
-                        ? "text-foreground"
-                        : "text-muted-foreground hover:text-foreground"
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
                       }`}
                     onClick={() => setIsOpen(false)}
                   >
@@ -89,20 +106,35 @@ export function Navbar() {
                   </Link>
                 ))}
                 <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                  <Link to="/register" onClick={() => setIsOpen(false)}>
-                    <Button variant="ghost" className="justify-start w-full">
-                      Register
+                  {isAuthenticated ? (
+                    <Button
+                      variant="ghost"
+                      className="justify-start w-full"
+                      onClick={() => {
+                        logout();
+                        setIsOpen(false);
+                      }}
+                    >
+                      Logout
                     </Button>
-                  </Link>
-                  <Button className="bg-primary text-primary-foreground">
-                    Book a demo
-                  </Button>
+                  ) : (
+                    <Link to="/login" onClick={() => setIsOpen(false)}>
+                      <Button variant="ghost" className="justify-start w-full">
+                        Login
+                      </Button>
+                    </Link>
+                  )}
+                  {!isAuthenticated && (
+                    <Button variant="outline" className="w-full">
+                      Book a demo
+                    </Button>
+                  )}
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </Container>
-    </nav>
+    </nav >
   );
 }
